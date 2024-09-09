@@ -1,0 +1,115 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:data_source",
+ "creation": "2024-09-09 23:04:42.681822",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "kafka_settings",
+  "kafka_topic",
+  "column_break_0qbuw",
+  "disabled",
+  "section_break_urxse",
+  "data_source",
+  "data_format",
+  "condition",
+  "column_break_6gv61",
+  "events",
+  "html_condition"
+ ],
+ "fields": [
+  {
+   "fieldname": "kafka_settings",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Kafka Settings",
+   "options": "Kafka Settings",
+   "reqd": 1
+  },
+  {
+   "fieldname": "kafka_topic",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Kafka Topic",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_urxse",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "data_source",
+   "fieldtype": "Link",
+   "label": "Data Source",
+   "options": "DocType",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "events",
+   "fieldtype": "Table MultiSelect",
+   "label": "Events",
+   "options": "Kafka DocEvent Detail"
+  },
+  {
+   "fieldname": "data_format",
+   "fieldtype": "Select",
+   "label": "Data Format",
+   "options": "\nJSON\nAvro\nProtobuf\nXML",
+   "reqd": 1
+  },
+  {
+   "fieldname": "condition",
+   "fieldtype": "Small Text",
+   "label": "Condition"
+  },
+  {
+   "fieldname": "html_condition",
+   "fieldtype": "HTML",
+   "options": "<p><strong>Condition Examples:</strong></p>\n<pre>doc.status==\"Open\"<br>doc.due_date==nowdate()<br>doc.total &gt; 40000\n</pre>"
+  },
+  {
+   "fieldname": "column_break_0qbuw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_6gv61",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-09-09 23:24:25.843781",
+ "modified_by": "Administrator",
+ "module": "Frappe Kafka",
+ "name": "Kafka Connector",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}
