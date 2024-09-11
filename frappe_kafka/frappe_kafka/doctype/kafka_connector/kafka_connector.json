@@ -1,7 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
- "autoname": "field:data_source",
+ "autoname": "format:KC-{#####}",
  "creation": "2024-09-09 23:04:42.681822",
  "default_view": "List",
  "doctype": "DocType",
@@ -18,7 +18,10 @@
   "condition",
   "column_break_6gv61",
   "events",
-  "html_condition"
+  "html_condition",
+  "section_break_j566r",
+  "select_fields",
+  "selected_fields"
  ],
  "fields": [
   {
@@ -51,8 +54,7 @@
    "fieldtype": "Link",
    "label": "Data Source",
    "options": "DocType",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "events",
@@ -84,15 +86,30 @@
   {
    "fieldname": "column_break_6gv61",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_j566r",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "select_fields",
+   "fieldtype": "Button",
+   "label": "Select Fields"
+  },
+  {
+   "fieldname": "selected_fields",
+   "fieldtype": "Code",
+   "label": "Selected Fields",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-09-09 23:24:25.843781",
+ "modified": "2024-09-10 22:06:32.843355",
  "modified_by": "Administrator",
  "module": "Frappe Kafka",
  "name": "Kafka Connector",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
