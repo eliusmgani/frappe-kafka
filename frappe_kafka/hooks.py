@@ -116,13 +116,17 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-# 	}
-# }
+doc_events = {
+	"*": {
+		"on_trash": "frappe_kafka.events.trigger_events",
+        "on_change": "frappe_kafka.events.trigger_events",
+        "on_submit": "frappe_kafka.events.trigger_events",
+		"on_update": "frappe_kafka.events.trigger_events",
+		"on_cancel": "frappe_kafka.events.trigger_events",
+        "after_insert": "frappe_kafka.events.trigger_events",
+        "before_update_after_submit": "frappe_kafka.events.trigger_events",
+	}
+}
 
 # Scheduled Tasks
 # ---------------
