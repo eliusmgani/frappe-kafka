@@ -118,13 +118,13 @@ app_license = "MIT"
 
 doc_events = {
 	"*": {
-		"on_trash": "frappe_kafka.events.trigger_events",
-        "on_change": "frappe_kafka.events.trigger_events",
-        "on_submit": "frappe_kafka.events.trigger_events",
-		"on_update": "frappe_kafka.events.trigger_events",
-		"on_cancel": "frappe_kafka.events.trigger_events",
-        "after_insert": "frappe_kafka.events.trigger_events",
-        "before_update_after_submit": "frappe_kafka.events.trigger_events",
+		"on_trash": "frappe_kafka.frappe_kafka.initialize_connector",
+        "on_change": "frappe_kafka.frappe_kafka.initialize_connector",
+        "on_submit": "frappe_kafka.frappe_kafka.initialize_connector",
+		"on_update": "frappe_kafka.frappe_kafka.initialize_connector",
+		"on_cancel": "frappe_kafka.frappe_kafka.initialize_connector",
+        "after_insert": "frappe_kafka.frappe_kafka.initialize_connector",
+        "before_update_after_submit": "frappe_kafka.frappe_kafka.initialize_connector",
 	}
 }
 
