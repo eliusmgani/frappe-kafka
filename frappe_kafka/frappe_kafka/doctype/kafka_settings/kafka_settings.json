@@ -16,7 +16,7 @@
   "api_secret",
   "protocol",
   "ksc_sec",
-  "schema_regestry_url",
+  "schema_registry_url",
   "column_break_zlsjh",
   "username",
   "password"
@@ -70,11 +70,6 @@
    "label": "Schema Registry Configurations"
   },
   {
-   "fieldname": "schema_regestry_url",
-   "fieldtype": "Data",
-   "label": "Schema Regestry Url"
-  },
-  {
    "fieldname": "column_break_zlsjh",
    "fieldtype": "Column Break"
   },
@@ -87,11 +82,16 @@
    "fieldname": "password",
    "fieldtype": "Password",
    "label": "Password"
+  },
+  {
+   "fieldname": "schema_registry_url",
+   "fieldtype": "Data",
+   "label": "Schema Registry Url"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-26 00:04:29.002734",
+ "modified": "2024-12-28 20:24:51.587765",
  "modified_by": "Administrator",
  "module": "Frappe Kafka",
  "name": "Kafka Settings",
