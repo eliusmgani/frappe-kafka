@@ -1,0 +1,1 @@
+confluent-kafka[avro,json,protobuf,schema-registry]
