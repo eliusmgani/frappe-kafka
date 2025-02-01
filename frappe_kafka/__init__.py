@@ -3,6 +3,7 @@ __title__ = "Frappe Kafka Client"
 
 import json
 import frappe
+from frappe.model import no_value_fields, default_fields
 from confluent_kafka.serialization import (
     StringSerializer,
     MessageField,
@@ -18,18 +19,29 @@ class FrappeKafkaClient():
         self.producer = self.settings.get_kafka_producer()
         self.schema_registry = self.settings.get_schema_registry_client()
 
-    def get_json_data(self):
+    def get_json_data(self, meta):
         data = {}
         if self.connector.selected_fields:
             for row in self.connector.selected_fields:
-                data[row.fieldname] = str(self.source_doc.get(row.fieldname)) or ""
-        
+                fieldname = row.fieldname
+                fieldtype = row.fieldtype 
+                value = self.source_doc.get(fieldname)
+
+                data[fieldname] = self.convert_value_by_fieldtype(value, fieldtype)
         else:
             values = self.source_doc.as_dict(convert_dates_to_str=True)
-            for key, value in data.items():
-                if value is None:
-                    data[key] = ""
-        
+            for key, value in values.items():
+                if key in default_fields:
+                    data[key] = value
+                
+                elif key in no_value_fields:
+                    # TODO: Consider child table values
+                    continue
+
+                else:
+                    fieldtype = meta.get_field(key).fieldtype
+                    data[key] = self.convert_value_by_fieldtype(value, fieldtype)
+
         return data
     
     def get_json_schema(self):
@@ -39,6 +51,12 @@ class FrappeKafkaClient():
         meta = frappe.get_meta(self.connector.data_source)
 
         for field in meta.fields:
+            if field.fieldname in no_value_fields:
+                continue
+            
+            # TODO: consider child table
+            # field.fieldname in default_fields
+
             if self.connector.selected_fields:
                 if field.fieldname in self.connector.selected_fields:
                     properties[field.fieldname] = {
@@ -65,7 +83,7 @@ class FrappeKafkaClient():
         if required:
             schema["required"] = required
 
-        return schema
+        return schema, meta
     
     def map_fieldtype_to_json_schema_type(self, fieldtype):
         """Map Frappe field types to JSON Schema types"""
@@ -83,6 +101,33 @@ class FrappeKafkaClient():
             'JSON': 'object'
         }
         return type_mapping.get(fieldtype, 'string')
+    
+    def convert_value_by_fieldtype(self, value, fieldtype):
+        """Convert value based on fieldtype"""
+        if value is None:
+            return ""
+
+        json_type = self.map_fieldtype_to_json_schema_type(fieldtype)
+
+        if json_type == 'boolean':
+            if isinstance(value, str):
+                return value.lower() in ('true', '1', 'yes')
+            return bool(value)
+        elif json_type == 'integer':
+            return int(value) if value else 0
+        elif json_type == 'number':
+            return float(value) if value else 0.0
+        elif json_type == 'string':
+            return str(value)
+        elif json_type == 'object':
+            if isinstance(value, dict):
+                return value
+            try:
+                return json.loads(value) if value else {}
+            except json.JSONDecodeError:
+                return {}
+        else:
+            return str(value)
 
     def send_message(self):
         if self.connector.data_format == "JSON":
@@ -97,8 +142,8 @@ class FrappeKafkaClient():
             # "use.deprecated.format": False,
         }
         
-        json_data = self.get_json_data()
-        json_schema = self.get_json_schema()
+        json_schema, meta = self.get_json_schema()
+        json_data = self.get_json_data(meta)
         json_schema_str = json.dumps(json_schema)
 		
 		# try:
