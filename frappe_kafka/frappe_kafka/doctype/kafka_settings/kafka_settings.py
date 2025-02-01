@@ -44,10 +44,10 @@ class KafkaSettings(Document):
 		conf = {
 			"bootstrap.servers": self.bootstrap_servers,
 			"client.id": self.client_id,
-			"security.protocol": self.protocol,
-			"sasl.mechanism": "PLAIN",
-			"sasl.username": self.get_password("api_key"),
-			"sasl.password": self.get_password("api_secret"),
+			"security.protocol": self.protocol
+			# "sasl.mechanism": "PLAIN",
+			# "sasl.username": self.get_password("api_key"),
+			# "sasl.password": self.get_password("api_secret"),
 		}
 
 		return conf
@@ -55,7 +55,7 @@ class KafkaSettings(Document):
 	
 	def get_registry_config(self):
 		conf = {
-			"url": self.schema_registry_url,
+			"url": self.schema_registry_url
 		}
 		if self.username and self.get_password('password'):
 			conf["basic.auth.user.info"] = f"{self.username}:{self.get_password('password')}",
